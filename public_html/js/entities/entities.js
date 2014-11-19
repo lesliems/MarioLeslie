@@ -32,8 +32,38 @@ game.PlayerEntity = me.Entity.extend({
         }else{
           this.renderable.setCurrentAnimation("idle");
         }
+       if (me.input.isKeyPressed("left")) {
+            // flip the sprite on horizontal axis
+            this.flipX(true);
+            // update the entity velocity
+            this.body.vel.x -= this.body.accel.x * me.timer.tick;
+            // change to the walking animation
+            if (!this.renderable.isCurrentAnimation("smallWalk")) {
+                this.renderable.setCurrentAnimation("smallWalk");
+            }
+        } else if (me.input.isKeyPressed("right")) {
+            // unflip the sprite
+            this.flipX(false);
+            // update the entity velocity
+            this.body.vel.x += this.body.accel.x * me.timer.tick;
+            // change to the walking animation
+            if (!this.renderable.isCurrentAnimation("smallWalk")) {
+                this.renderable.setCurrentAnimation("smallWalk");
+            }
+        else
+             {this.body.vel.x = 0;
+             }
+        if(this.body.vel.x != 0){
+            if(!this.renderable.isCurrentAnimation("smallwalk")){
+                this.renderable.setCurrentAnimation("smallWalk");
+                this.renderable.setAnimationFrame();
+            }
+        }else{
+          this.renderable.setCurrentAnimation("idle");
+        }
         this.body.update(delta);
         this._super(me.Entity, "update", [delta]);
         return true;
+        }
     }
 });
