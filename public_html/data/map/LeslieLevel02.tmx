@@ -5,26 +5,31 @@
  </tileset>
  <tileset firstgid="170" name="meta-tiles" tilewidth="70" tileheight="70">
   <image source="../img/meta-tiles.png" width="350" height="70"/>
+  <tile id="4">
+   <properties>
+    <property name="type" value="solid"/>
+   </properties>
+  </tile>
  </tileset>
  <tileset firstgid="175" name="meta-tiles" tilewidth="70" tileheight="70">
   <image source="../img/meta-tiles.png" width="350" height="70"/>
  </tileset>
- <imagelayer name="Image Layer 1" x="-415" y="-845">
-  <image source="../../../../../../Users/Public/Pictures/Sample Pictures/SkyBlueSky.jpg"/>
- </imagelayer>
+ <tileset firstgid="180" name="background-tiles" tilewidth="70" tileheight="70">
+  <image source="../img/background-tiles.png" width="910" height="910"/>
+ </tileset>
+ <layer name="collision" width="16" height="9">
+  <data encoding="base64" compression="zlib">
+   eJxjYBicYB0aTWt9hPQTax4h+wmZQ4z8Oix8Uvy7DgcmRz8Ao+0Q/w==
+  </data>
+ </layer>
  <layer name="background" width="16" height="9">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFQxEUQ2lbJBwKxWFIbGwYWY8dEg4hEiPrAQCyWgnx
+   eJwTYWBgEBnEWHSQ2EdvdxCLbZEwOXrskDCx+pH1AABFDw02
   </data>
  </layer>
- <layer name="Tile Layer 2" width="16" height="9">
+ <layer name="Tile Layer 3" width="16" height="9">
   <data encoding="base64" compression="zlib">
-   eJxjYBicQIhKeuhpDrXUDCUAAJuIAH8=
-  </data>
- </layer>
- <layer name="collision" width="16" height="9" opacity="0">
-  <data encoding="base64" compression="zlib">
-   eJxjYBicYB2V9NDTHGqpIQWsQ8Lk6KFUPwDmsQzr
+   eJxjYBicQAiNJlUftewn1VxC6qjlvmIsYqFEYlwghEiMDACRWgeM
   </data>
  </layer>
 </map>

@@ -18,8 +18,9 @@ game.resources = [
 	 * {name: "example01", type: "tmx", src: "data/map/example01.tmx"},
 	 * {name: "example01", type: "tmx", src: "data/map/example01.json"},
  	 */
-        {name: "leslie-level01", type: "tmx", src: "data/map/leslie-level01.tmx"},
-        {name: "leslie-level02", type: "tmx", src: "data/map/leslie-level02.tmx"},
+        
+        {name: "LeslieLevel01", type: "tmx", src: "data/map/LeslieLevel01.tmx"},
+        {name: "LeslieLevel02", type: "tmx", src: "data/map/LeslieLevel02.tmx"}
 
 
 	/* Background music. 
