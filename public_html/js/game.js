@@ -44,11 +44,11 @@ var game = {
 		
                 me.pool.register("levelTrigger", game.LevelTrigger);
                 
-            me.state.set(me.state.MENU, new game.TitleScreen());
+//            me.state.set(me.state.MENU, new game.TitleScreen());
 		
             me.state.set(me.state.PLAY, new game.PlayScreen());
 
 		// Start the game.
-		me.state.change(me.state.MENU);
+		me.state.change(me.state.PLAY);
 	}
 };
