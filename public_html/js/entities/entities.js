@@ -18,6 +18,7 @@ game.PlayerEntity = me.Entity.extend({
     },
     
     update: function(delta){
+        console.log(this.pos.x);
         if(me.input.isKeyPressed("right")){
             this.body.vel.x += this.body.accel.x * me.timer.tick;
         }
@@ -68,7 +69,65 @@ game.LevelTrigger = me.Entity.extend({
     onCollision: function(){
         this.body.setCollisionMask(me.collision.types.NO_OBJECT);
         me.levelDirector.loadLevel(this.level);
+        console.log(this.xSpawn + " " + this.ySpawn);
         me.state.current().resetPlayer(this.xSpawn, this.ySpawn);
     }
     
+});
+
+game.BadGuy = me.Entity.extend({
+    init: function(x, y, settings){
+          this._super(me.Entity, 'init', [x, y, {
+                image: "slime",
+                spritewidth: "60",
+                spriteheight: "28",
+                height: 60,
+                width: 28,
+                getShape: function(){
+                    return(new me.Rect(0, 0, 60, 28)).toPolygon();
+                }
+        }]);
+         this.spriteWidth = 60;
+         var width = settings.width;
+         x = this.pos.x;
+         this.startX = x;
+         this.endX = x + width - this.spriteWidth;
+         this.pos.x = x + width - this.spriteWidth;
+         this.updateBounds();
+         
+         this.alwaysUpdate = true;
+         
+         this.walkLeft = false;
+         this.alive = true;
+         this.type = ("badguy");
+         
+         
+         this.body.setVelocity(4, 6);
+    },
+    update: function(delta){
+        this.body.update(delta);
+        me.collision.check(this, true, this.collideHandler.bind(this), true);
+     
+        //if the bad guy is still alive- if not then get rid of it
+        if(this.alive){
+            if(this.walkLeft && this.pos.x <= this.startX){
+                this.walkLeft = false;
+            }else if(! this.walkLeft && this.pos.x >= this.endX){
+                this.walkLeft = true;
+            }
+            this.flipX(! this.walkLeft);
+            //if true, it will do whats on the left - if false it will do whats one the right
+            this.body.vel.x += (this.walkLeft) ? -this.body.accel.x * me.timer.tick : this.body.accel.x * me.timer.tick;
+        }else{
+            
+        }me.game.world.removeChild(this);
+        
+        
+        this._super(me.Entity, "update", [delta]);
+        return true;
+    },
+    
+    collideHandler: function(){
+        
+    }
 });
