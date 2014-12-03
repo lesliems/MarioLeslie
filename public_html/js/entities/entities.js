@@ -18,7 +18,7 @@ game.PlayerEntity = me.Entity.extend({
     },
     
     update: function(delta){
-        console.log(this.pos.x);
+//        console.log(this.pos.x);
         if(me.input.isKeyPressed("right")){
             this.body.vel.x += this.body.accel.x * me.timer.tick;
         }
@@ -53,7 +53,16 @@ game.PlayerEntity = me.Entity.extend({
         return true;
         },
         collideHandler: function(response){
-        
+            var ydif = this.pos.y - response.b.pos.y;
+            console.log(ydif);
+         //respond.b represents what we run into 
+            if(response.b.type === 'badguy'){
+                if(ydif <= -115){
+                    response.b.alive = false;
+                }else{               
+                me.state.change(me.state.MENU);
+            }
+            }
         }
  });
 
@@ -112,17 +121,17 @@ game.BadGuy = me.Entity.extend({
         if(this.alive){
             if(this.walkLeft && this.pos.x <= this.startX){
                 this.walkLeft = false;
-            }else if(! this.walkLeft && this.pos.x >= this.endX){
+            }else if(!this.walkLeft && this.pos.x >= this.endX){
                 this.walkLeft = true;
             }
-            this.flipX(! this.walkLeft);
+            this.flipX(!this.walkLeft);
             //if true, it will do whats on the left - if false it will do whats one the right
             this.body.vel.x += (this.walkLeft) ? -this.body.accel.x * me.timer.tick : this.body.accel.x * me.timer.tick;
         }else{
-            
-        }me.game.world.removeChild(this);
+            me.game.world.removeChild(this);
+        }
         
-        
+        // delta- how long it takes
         this._super(me.Entity, "update", [delta]);
         return true;
     },
