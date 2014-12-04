@@ -21,11 +21,19 @@ game.PlayerEntity = me.Entity.extend({
 //        console.log(this.pos.x);
         if(me.input.isKeyPressed("right")){
             this.body.vel.x += this.body.accel.x * me.timer.tick;
+            this.flipX(false);
         }
         else{
             this.body.vel.x = 0;
         }  
-        
+        if(me.input.isKeyPressed("left")){
+            this.body.vel.x -= this.body.accel.x * me.timer.tick;
+            this.flipX(true);
+        }
+        else{
+            this.body.vel.x - 0;
+        }  
+   
                  this.body.update(delta);
                  me.collision.check(this, true, this.collideHandler.bind(this), true);
         
@@ -36,7 +44,6 @@ game.PlayerEntity = me.Entity.extend({
             }
             } else {
                 this.renderable.setCurrentAnimation("idle");
-
             }
             if (me.input.isKeyPressed('jump')) {
             // make sure we are not already jumping or falling
@@ -47,8 +54,9 @@ game.PlayerEntity = me.Entity.extend({
                 // set the jumping flag
                 this.body.jumping = true;
             }
- 
+            
         }
+       
         this._super(me.Entity, "update", [delta]);
         return true;
         },
