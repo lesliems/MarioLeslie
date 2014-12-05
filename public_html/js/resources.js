@@ -10,8 +10,8 @@ game.resources = [
         {name: "title-screen", type:"image", src: "data/img/title-screen.png"},
         {name: "slime", type:"image", src: "data/img/slime-spritesheet.png"},
         {name: "slime", type:"image", src: "data/img/slime-spritesheet.png"},
-        {name: "tree", type:"image", src: "data/img/tree.png"},
-
+        {name: "tree1", type:"image", src: "data/img/tree1.png"},
+        {name: "mushroom", type:"image", src: "data/img/mushroom.png"},
 
 	/* Atlases 
 	 * @example

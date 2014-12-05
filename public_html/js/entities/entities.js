@@ -19,7 +19,9 @@ game.PlayerEntity = me.Entity.extend({
     
     update: function(delta){
 //        console.log(this.pos.x);
+    //check if rigth key is pressed
         if(me.input.isKeyPressed("right")){
+            //adds the speed set is the setVelocity 
             this.body.vel.x += this.body.accel.x * me.timer.tick;
             this.flipX(false);
         }
@@ -61,6 +63,7 @@ game.PlayerEntity = me.Entity.extend({
         return true;
         },
         collideHandler: function(response){
+            //ydif is the between mario and whatever he hits so he can kill it
             var ydif = this.pos.y - response.b.pos.y;
             console.log(ydif);
          //respond.b represents what we run into 
@@ -133,7 +136,8 @@ game.BadGuy = me.Entity.extend({
                 this.walkLeft = true;
             }
             this.flipX(!this.walkLeft);
-            //if true, it will do whats on the left - if false it will do whats one the right
+            //if true, it will do whats on the left - if false it will do whats one the right/ 
+            //we are adding an amount to our current position but to determine to add a positive or negative amount we check weather this.walkLeft is true.
             this.body.vel.x += (this.walkLeft) ? -this.body.accel.x * me.timer.tick : this.body.accel.x * me.timer.tick;
         }else{
             me.game.world.removeChild(this);
