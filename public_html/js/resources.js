@@ -11,6 +11,8 @@ game.resources = [
         {name: "slime", type:"image", src: "data/img/slime-spritesheet.png"},
         {name: "slime", type:"image", src: "data/img/slime-spritesheet.png"},
         {name: "tree1", type:"image", src: "data/img/tree1.png"},
+        {name: "waterfall", type:"image", src: "data/img/waterfall.png"},
+//        {name: "coin", type:"image", src: "data/img/spin_coin_big_upscale_strip6.png"},
         {name: "mushroom", type:"image", src: "data/img/mushroom.png"},
 
 	/* Atlases 

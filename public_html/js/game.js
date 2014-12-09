@@ -12,7 +12,7 @@ var game = {
 	// Run on page load.
 	"onload" : function () {
 	// Initialize the video.
-	if (!me.video.init("screen",  me.video.CANVAS, 1100, 632, true, 1.0)) {
+	if (!me.video.init("screen",  me.video.CANVAS, 1100, 600, true, 1.0)) {
 		alert("Your browser does not support HTML5 canvas.");
 		return;
 	}
@@ -45,7 +45,7 @@ var game = {
                 me.pool.register("levelTrigger", game.LevelTrigger);
                 me.pool.register("BadGuy", game.BadGuy);
                 me.pool.register("mushroom", game.Mushroom);
-                
+//                me.pool.register("CoinEntity", game.CoinEntity);                
             me.state.set(me.state.MENU, new game.TitleScreen());
 		
             me.state.set(me.state.PLAY, new game.PlayScreen());
