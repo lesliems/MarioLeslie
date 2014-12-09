@@ -12,8 +12,13 @@ game.PlayerEntity = me.Entity.extend({
             }]);
 
         this.renderable.addAnimation("idle", [3]);
+        this.renderable.addAnimation("bigIdle", [19]);
         this.renderable.addAnimation("smallWalk", [8, 9, 10, 11, 12, 13], 80);
+        this.renderable.addAnimation("bigWalk", [14, 15, 16, 17, 18, 19], 80);
+        this.renderable.addAnimation("shrink", [0, 1, 2, 3], 80);
+        this.renderable.addAnimation("grow", [4, 5, 6, 7], 80);
         this.renderable.setCurrentAnimation("idle");
+        this.big = false;
         this.body.setVelocity(5, 20);
     },
     update: function(delta) {
@@ -38,13 +43,26 @@ game.PlayerEntity = me.Entity.extend({
         this.body.update(delta);
         me.collision.check(this, true, this.collideHandler.bind(this), true);
 
-        if (this.body.vel.x !== 0) {
-            if (!this.renderable.isCurrentAnimation("smallWalk")) {
-                this.renderable.setCurrentAnimation("smallWalk");
-                this.renderable.setAnimationFrame();
+        //if mario is not big
+        if (!this.big) {
+            if (this.body.vel.x !== 0) {
+                if (!this.renderable.isCurrentAnimation("smallWalk")&& !this.renderable.isCurrentAnimation("grow") && !this.renderable.isCurrentAnimation("shrink")) {
+                    this.renderable.setCurrentAnimation("smallWalk");
+                    this.renderable.setAnimationFrame();
+                }
+            } else {
+                this.renderable.setCurrentAnimation("idle");
             }
         } else {
-            this.renderable.setCurrentAnimation("idle");
+            if (this.body.vel.x !== 0) {
+                // to not walk while shrinking or growing
+                if (!this.renderable.isCurrentAnimation("bigWalk") && !this.renderable.isCurrentAnimation("grow") && !this.renderable.isCurrentAnimation("shrink")) {
+                    this.renderable.setCurrentAnimation("bigWalk");
+                    this.renderable.setAnimationFrame();
+                }
+            } else {
+                this.renderable.setCurrentAnimation("bigIdle");
+            }
         }
         if (me.input.isKeyPressed('jump')) {
             // make sure we are not already jumping or falling
@@ -73,9 +91,26 @@ game.PlayerEntity = me.Entity.extend({
             if (ydif <= -115) {
                 response.b.alive = false;
             } else {
-                me.state.change(me.state.MENU);
+                if (this.big) {
+                    this.big = false;
+                    this.body.vel.y -= this.body.accel.y * me.timer.tick;
+                    this.jumping = true;
+                    //once the first (shrink) is done it will move on to the next (smallidle)
+                    this.renderable.setCurrentAnimation("shrink", "idle");
+                    this.renderable.setAnimationFrame();
+                } else {
+                    me.state.change(me.state.MENU);
+
+                }
             }
+        } else if (response.b.type === 'mushroom') {
+            this.renderable.setCurrentAnimation("grow", "bigIdle");
+            this.big = true;
+            me.game.world.removeChild(response.b);
         }
+//        else if (response.b.type === 'coin'){
+//            
+//        }
     }
 });
 
@@ -154,8 +189,8 @@ game.BadGuy = me.Entity.extend({
 });
 
 game.Mushroom = me.Entity.extend({
-        init: function(x, y, settings){
-                  this._super(me.Entity, 'init', [x, y, {
+    init: function(x, y, settings) {
+        this._super(me.Entity, 'init', [x, y, {
                 image: "mushroom",
                 spritewidth: "64",
                 spriteheight: "64",
@@ -167,27 +202,45 @@ game.Mushroom = me.Entity.extend({
             }]);
         me.collision.check(this);
         this.type = "mushroom";
-        }
-        
-    });
+    }
+
+});
 //
-//game.CoinEntity = me.CollectableEntity.extend({
+//game.Coin = me.Entity.extend({
 //    // extending the init function is not mandatory
 //    // unless you need to add some extra initialization
 //    init: function(x, y, settings) {
 //        // call the parent constructor
 //        this._super(me.CollectableEntity, 'init', [x, y, {
 //                image: "coin",
-//                spritewidth: "50",
-//                spriteheight: "28",
-//                height: 50,
-//                width: 28,
+//                spritewidth: "10",
+//                spriteheight: "12",
+//                height: 10,
+//                width: 12,
 //                getShape: function() {
-//                    return(new me.Rect(0, 0, 50, 28)).toPolygon();
-//                }
+//                    return(new me.Rect(0, 0, 10, 12)).toPolygon();
+//                },
+//                 // this function is called by the engine, when
+//    // an object is touched by something (here collected)
+//    onCollision : function (response, other) {
+//        // do something when collected
+// 
+//        // make sure it cannot be collected "again"
+//        this.body.setCollisionMask(me.collision.types.NO_OBJECT);
+// 
+//        // remove it
+//        me.game.world.removeChild(this);
+//         
+//        return false
+//    }
 //            }]);
-//        
+//            this.renderable.addAnimation("idle", [3]);
+//        this.renderable.addAnimation("spin_coin_big_strip6", [0, 1, 2, 3, 4, 5], 80);
+//        this.renderable.setCurrentAnimation("coin");
+//        this.body.setVelocity(5, 20);
+//        me.collision.check(this);
+//        this.type = "coin";
 //    }
 //
 //});
-//    
+    

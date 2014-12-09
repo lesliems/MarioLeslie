@@ -59,7 +59,7 @@
   <object name="BadGuy" x="349.333" y="422.667" width="262.667" height="66.6667"/>
   <object name="BadGuy" x="789.333" y="420" width="166.667" height="66.6667"/>
  </objectgroup>
- <objectgroup name="CoinEntity">
+ <objectgroup name="CollectableEntities">
   <properties>
    <property name="image" value="coin"/>
    <property name="spritewidth" value="32"/>
