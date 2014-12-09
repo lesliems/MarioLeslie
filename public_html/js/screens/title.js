@@ -2,20 +2,21 @@ game.TitleScreen = me.ScreenObject.extend({
 	/**	
 	 *  action to perform on state change
 	 */
+        //start screen
 	onResetEvent: function() {	
-            me.game.world.addChild( new me.Sprite (0, 0, me.loader.getImage('title-screen')), -10);
+            me.game.world.addChild( new me.Sprite (0, 0, me.loader.getImage('start')), -10);
             me.input.bindKey(me.input.KEY.ENTER,"start");
             
             me.game.world.addChild(new(me.Renderable.extend ({
                 
                 init: function(){
                     this._super(me.Renderable, 'init',  [510, 30, me.game.viewport.width, me.game.viewport.height]);
-                    this.font = new me.Font ("Ariel", 46, "black");
+                    this.font = new me.Font ("Ariel", 64, "grey");
                 },
                 
                 draw: function(renderer){
-                    this.font.draw(renderer.getContext(), "MARIO..ISH", 450, 130);
-                    this.font.draw(renderer.getContext(), "Press ENTER to play", 250, 530);
+                    this.font.draw(renderer.getContext(), "MAWRIO", 360, 130);
+                    this.font.draw(renderer.getContext(), "Press ENTER to play", 260, 530);
                 }
                 
                 

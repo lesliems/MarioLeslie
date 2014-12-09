@@ -10,7 +10,7 @@ game.PlayerEntity = me.Entity.extend({
                     return(new me.Rect(0, 0, 30, 128)).toPolygon();
                 }
             }]);
-
+        // animations for mario
         this.renderable.addAnimation("idle", [3]);
         this.renderable.addAnimation("bigIdle", [19]);
         this.renderable.addAnimation("smallWalk", [8, 9, 10, 11, 12, 13], 80);
@@ -46,7 +46,7 @@ game.PlayerEntity = me.Entity.extend({
         //if mario is not big
         if (!this.big) {
             if (this.body.vel.x !== 0) {
-                if (!this.renderable.isCurrentAnimation("smallWalk")&& !this.renderable.isCurrentAnimation("grow") && !this.renderable.isCurrentAnimation("shrink")) {
+                if (!this.renderable.isCurrentAnimation("smallWalk") && !this.renderable.isCurrentAnimation("grow") && !this.renderable.isCurrentAnimation("shrink")) {
                     this.renderable.setCurrentAnimation("smallWalk");
                     this.renderable.setAnimationFrame();
                 }
@@ -64,6 +64,7 @@ game.PlayerEntity = me.Entity.extend({
                 this.renderable.setCurrentAnimation("bigIdle");
             }
         }
+        //if the up key is pressed, mario will jump
         if (me.input.isKeyPressed('jump')) {
             // make sure we are not already jumping or falling
             if (!this.body.jumping && !this.body.falling) {
@@ -103,6 +104,7 @@ game.PlayerEntity = me.Entity.extend({
 
                 }
             }
+            //if mario touches mushroom, the idle (mario) will grow
         } else if (response.b.type === 'mushroom') {
             this.renderable.setCurrentAnimation("grow", "bigIdle");
             this.big = true;
@@ -113,7 +115,6 @@ game.PlayerEntity = me.Entity.extend({
 //        }
     }
 });
-
 game.LevelTrigger = me.Entity.extend({
     init: function(x, y, settings) {
         this._super(me.Entity, 'init', [x, y, settings]);
@@ -157,7 +158,7 @@ game.BadGuy = me.Entity.extend({
         this.alive = true;
         this.type = ("badguy");
 
-
+        // velocity of bad guy
         this.body.setVelocity(4, 6);
     },
     update: function(delta) {
@@ -200,12 +201,13 @@ game.Mushroom = me.Entity.extend({
                     return(new me.Rect(0, 0, 64, 64)).toPolygon();
                 }
             }]);
+        // check if mario collides with mushroom
         me.collision.check(this);
         this.type = "mushroom";
     }
 
 });
-//
+
 //game.Coin = me.Entity.extend({
 //    // extending the init function is not mandatory
 //    // unless you need to add some extra initialization
@@ -213,33 +215,28 @@ game.Mushroom = me.Entity.extend({
 //        // call the parent constructor
 //        this._super(me.CollectableEntity, 'init', [x, y, {
 //                image: "coin",
-//                spritewidth: "10",
-//                spriteheight: "12",
-//                height: 10,
-//                width: 12,
+//                spritewidth: "61",
+//                spriteheight: "57",
+//                height: 57,
+//                width: 61,
 //                getShape: function() {
-//                    return(new me.Rect(0, 0, 10, 12)).toPolygon();
+//                    return(new me.Rect(0, 0, 57, 61)).toPolygon();
 //                },
-//                 // this function is called by the engine, when
-//    // an object is touched by something (here collected)
-//    onCollision : function (response, other) {
-//        // do something when collected
-// 
-//        // make sure it cannot be collected "again"
-//        this.body.setCollisionMask(me.collision.types.NO_OBJECT);
-// 
-//        // remove it
-//        me.game.world.removeChild(this);
-//         
-//        return false
-//    }
+//                // this function is called by the engine, when
+//                // an object is touched by something (here collected)
+//                onCollision: function(response, other) {
+//                    // do something when collected
+//
+//                    // make sure it cannot be collected "again"
+//                    this.body.setCollisionMask(me.collision.types.NO_OBJECT);
+//
+//                    // remove it
+//                    me.game.world.removeChild(this);
+//
+//                    return false
+//                }
 //            }]);
-//            this.renderable.addAnimation("idle", [3]);
-//        this.renderable.addAnimation("spin_coin_big_strip6", [0, 1, 2, 3, 4, 5], 80);
-//        this.renderable.setCurrentAnimation("coin");
-//        this.body.setVelocity(5, 20);
-//        me.collision.check(this);
-//        this.type = "coin";
+//
 //    }
 //
 //});
